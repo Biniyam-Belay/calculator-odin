@@ -44,7 +44,7 @@ body{
     justify-content: right;
     align-items: center;
 }
-.key{
+.num-key{
     color: black;
     display: flex;
     justify-content: center;
@@ -55,6 +55,19 @@ body{
     margin: 3px;
     border: 1px solid rgb(10, 10, 10);
 }
+
+.op-key{
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    background-color: rgb(98, 224, 255);
+    border-radius: 10px;
+    margin: 3px;
+    border: 1px solid rgb(10, 10, 10);
+}
+
 .key-s{
     color: black;
     display: grid;
@@ -62,7 +75,7 @@ body{
     justify-content: center;
     align-items: center;
     font-size: 40px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(83, 147, 236);
     border-radius: 10px;
     margin: 3px;
     border: 1px solid rgb(0, 0, 0);
