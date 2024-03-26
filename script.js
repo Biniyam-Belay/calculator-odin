@@ -1,45 +1,73 @@
-scr = [];
-b = [];
+document.addEventListener('DOMContentLoaded', function() {
+  const display = document.getElementById('display');
+  const numKeys = document.querySelectorAll('.num-key');
+  const operatorKeys = document.querySelectorAll('.operator');
+  const clearKey = document.querySelector('.clear');
+  const calculateKey = document.querySelector('.calculate');
 
-const dsp = document.querySelector(".display2");
-const numkey = document.querySelectorAll(".num-key");
+  let currentOperand = '';
+  let firstOperand = null;
+  let secondOperand = null;
+  let currentOperator = null;
+  let result = null;
 
-
-// A code that takes the input from nember keys and displays them on the screen
-numkey.forEach(function (numkey) {
-  numkey.addEventListener("click", () => {
-    scr.push(numkey.innerHTML);
-    const scrc = parseInt(scr.join(""), 10);
-    dsp.textContent = scrc;
+  numKeys.forEach(key => {
+    key.addEventListener('click', () => {
+      currentOperand += key.textContent;
+      display.value = currentOperand;
+    });
   });
-});
 
-// function that adds two number a and b
-function add(a, b) {
-  return a + b;
-}
-
-// a code that runs the addition operation
-// here make it store the value of b after storing the previous input as value of A
-const addd = document.getElementById("add");
-addd.addEventListener("click", () => {
-  a = parseInt(scr.join(""), 10);
-  scr = []
-  b = parseInt(scr.join(""), 10);
-  dsp.textContent = ''
-  console.log(a);
-  console.log(b)
-  
-});
-
-const eql = document.getElementById("equals");
-eql.addEventListener("click", () => {
-  dsp.textContent = add(a, b);
-});
-
-const clr = document.getElementById('clear');
-clr.addEventListener("click", () => {
-    dsp.textContent = ''
-    scr = []
-    b = []
+  operatorKeys.forEach(key => {
+    key.addEventListener('click', () => {
+      if (firstOperand === null) {
+        firstOperand = parseFloat(currentOperand);
+        currentOperator = key.value;
+        currentOperand = '';
+        display.value = '';
+      } else if (currentOperand !== '') {
+        secondOperand = parseFloat(currentOperand);
+        result = operate(firstOperand, currentOperator, secondOperand);
+        display.value = result;
+        firstOperand = result;
+        currentOperator = key.value;
+        currentOperand = '';
+      }
+    });
   });
+
+  calculateKey.addEventListener('click', () => {
+    if (currentOperand !== '') {
+      secondOperand = parseFloat(currentOperand);
+      result = operate(firstOperand, currentOperator, secondOperand);
+      display.value = result;
+      firstOperand = null;
+      secondOperand = null;
+      currentOperator = null;
+      currentOperand = result.toString();
+    }
+  });
+
+  clearKey.addEventListener('click', () => {
+    currentOperand = '';
+    firstOperand = null;
+    secondOperand = null;
+    currentOperator = null;
+    display.value = '';
+  });
+
+  function operate(a, operator, b) {
+    switch (operator) {
+      case '+':
+        return a + b;
+      case '-':
+        return a - b;
+      case '*':
+        return a * b;
+      case '/':
+        return a / b;
+      default:
+        return null;
+    }
+  }
+});
